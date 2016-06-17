@@ -14,9 +14,6 @@
 		 */
 		public static function text($label = NULL, $maxLength = NULL)
 		{
-			$control = new FormControls\TextInput($label, $maxLength);
-
-			$control->addFilter(array('Inteve\Forms\Filters', 'text'));
-			return $control;
+			return new Controls\TextInput($label, $maxLength);
 		}
 	}
