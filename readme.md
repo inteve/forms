@@ -13,7 +13,7 @@ Installation
 composer require inteve/forms
 ```
 
-Library requires PHP 5.3 or later.
+Library requires PHP 5.6 or later.
 
 ------------------------------
 
