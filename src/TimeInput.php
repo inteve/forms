@@ -87,8 +87,8 @@
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$this->rawValue = $value;
 			$parts = explode(':', $value, 3);
-			$this->hour = isset($parts[0]) ? self::toInt($parts[0]) : NULL;
-			$this->minute = isset($parts[1]) ? self::toInt($parts[1]) : NULL;
+			$this->hour = isset($parts[0]) ? Helpers::toInt($parts[0]) : NULL;
+			$this->minute = isset($parts[1]) ? Helpers::toInt($parts[1]) : NULL;
 		}
 
 
@@ -121,23 +121,5 @@
 			}
 
 			return FALSE;
-		}
-
-
-		/**
-		 * @param  string
-		 * @return int|NULL
-		 */
-		private static function toInt($value)
-		{
-			$value = trim($value);
-
-			if ($value !== '') {
-				$value = ltrim($value, '0');
-				$value = $value !== '' ? $value : '0';
-			}
-
-			$tmp = abs((int) $value);
-			return ((string) $tmp) === $value ? $tmp : NULL;
 		}
 	}

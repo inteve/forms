@@ -16,3 +16,8 @@
 	class InvalidValueException extends Exception
 	{
 	}
+
+
+	class StaticClassException extends Exception
+	{
+	}
