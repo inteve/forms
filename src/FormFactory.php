@@ -2,7 +2,7 @@
 
 	namespace Inteve\Forms;
 
-	use Nette;
+	use Nette\Application\UI\Form;
 
 
 	class FormFactory implements IFormFactory
@@ -11,7 +11,7 @@
 
 
 		/**
-		 * @return Nette\Application\UI\Form
+		 * @return Form
 		 */
 		public function create()
 		{

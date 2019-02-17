@@ -17,6 +17,10 @@
 		"nette/forms": "^2.4",
 		"nette/utils": "^2.4"
 	},
+	"require-dev": {
+		"nette/application": "^2.4",
+		"nette/tester": "^2.0"
+	},
 	"suggest": {
 		"nette/application": "For Inteve\\Forms\\FormFactory."
 	}
