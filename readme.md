@@ -18,6 +18,18 @@ composer require inteve/forms
 Library requires PHP 5.6 or later.
 
 
+DateInput
+---------
+
+```php
+$form['date'] = new Inteve\Forms\TimeInput('Date:', 'Error message for invalid date.');
+$form['date']->setDefaultValue(new \DateTimeImmutable('2018-01-01 20:18'));
+$form['date']->setDefaultValue(new \DateTime('2018-01-01 20:18'));
+
+$form['date']->getValue(); // DateTimeImmutable|NULL
+```
+
+
 TimeInput
 ---------
 
