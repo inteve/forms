@@ -21,6 +21,21 @@ function getHtmlValue($input)
 }
 
 
+function toHtml($input, $removeRules)
+{
+	$form = new Nette\Forms\Form;
+	$form['test'] = $input;
+	$html = $input->getControl();
+	unset($form['test']);
+
+	if ($removeRules) {
+		$html->{'data-nette-rules'} = NULL;
+	}
+
+	return (string) $html;
+}
+
+
 function getPostValue($input, $postValue)
 {
 	$_SERVER['REQUEST_METHOD'] = 'POST';

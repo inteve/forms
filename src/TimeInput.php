@@ -86,7 +86,7 @@
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$this->rawValue = $value;
-			$parts = explode(':', $value, 2);
+			$parts = explode(':', $value, 3);
 			$this->hour = isset($parts[0]) ? self::toInt($parts[0]) : NULL;
 			$this->minute = isset($parts[1]) ? self::toInt($parts[1]) : NULL;
 		}

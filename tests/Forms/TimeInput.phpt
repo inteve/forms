@@ -10,6 +10,7 @@ test(function () {
 	Assert::null($input->getValue());
 	Assert::same('', getHtmlValue($input));
 	Assert::false($input->isFilled());
+	Assert::same('<input name="test" id="frm-test" value="">', toHtml($input, TRUE));
 });
 
 
@@ -85,5 +86,7 @@ test(function () {
 	Assert::null(getPostValue($input, '24:00'));
 
 	Assert::equal(new DateInterval('PT0H0M'), getPostValue($input, '00:00'));
+	Assert::equal(new DateInterval('PT0H0M'), getPostValue($input, '00:00:00'));
 	Assert::equal(new DateInterval('PT18H'), getPostValue($input, '18:00'));
+	Assert::equal(new DateInterval('PT18H'), getPostValue($input, '18:00:30'));
 });
