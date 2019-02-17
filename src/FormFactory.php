@@ -5,7 +5,7 @@
 	use Nette;
 
 
-	class FormFactory
+	class FormFactory implements IFormFactory
 	{
 		use \Nette\SmartObject;
 
