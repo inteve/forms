@@ -15,6 +15,23 @@ test(function () {
 
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
+	FormAssert::errors($input, []);
+
+	$input = new Inteve\Forms\TimeInput(NULL, 'Custom error message');
+	FormAssert::errors($input, []);
+
+	$input = new Inteve\Forms\TimeInput;
+	$input->setRequired();
+	FormAssert::errors($input, ['This field is required.']);
+
+	$input = new Inteve\Forms\TimeInput(NULL, 'Custom error message');
+	$input->setRequired();
+	FormAssert::errors($input, ['This field is required.']);
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
 	FormAssert::setEmptyValue($input, NULL);
 });
 

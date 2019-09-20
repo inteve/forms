@@ -24,6 +24,7 @@
 		public function __construct($caption = NULL, $errorMessage = 'Invalid date.')
 		{
 			parent::__construct($caption);
+			$this->setRequired(FALSE);
 			$this->addRule([__CLASS__, 'validateDate'], $errorMessage);
 		}
 

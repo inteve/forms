@@ -21,6 +21,7 @@
 		public function __construct($caption = NULL, $errorMessage = 'Invalid time.')
 		{
 			parent::__construct($caption);
+			$this->setRequired(FALSE);
 			$this->addRule([__CLASS__, 'validateTime'], $errorMessage);
 		}
 
