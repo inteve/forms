@@ -1,92 +1,112 @@
 <?php
 
 use Tester\Assert;
+use Tests\FormAssert;
 
 require __DIR__ . '/../bootstrap.php';
 
 
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
-	Assert::null($input->getValue());
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
-	Assert::same('<input name="test" id="frm-test" value="">', toHtml($input, TRUE));
+	FormAssert::empty($input);
+	FormAssert::render($input, '<input name="test" id="frm-test" value="">');
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
-	$input->setValue(NULL);
-	Assert::null($input->getValue());
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\TimeInput;
-	$input->setValue(new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')));
-	Assert::equal(new \DateInterval('PT18H0M'), $input->getValue());
-	Assert::same('18:00', getHtmlValue($input));
-	Assert::true($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\TimeInput;
-	$input->setValue(new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')));
-	Assert::equal(new \DateInterval('PT18H0M'), $input->getValue());
-	Assert::same('18:00', getHtmlValue($input));
-	Assert::true($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\TimeInput;
-	$time = new \DateInterval('PT18H0M');
-	$input->setValue($time);
-	Assert::equal($time, $input->getValue());
-	Assert::same('18:00', getHtmlValue($input));
-	Assert::true($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\TimeInput;
-	$time = new \DateInterval('PT1H0M');
-	$input->setValue($time);
-	Assert::equal($time, $input->getValue());
-	Assert::same('1:00', getHtmlValue($input));
-	Assert::true($input->isFilled());
+	FormAssert::setEmptyValue($input, NULL);
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
 
-	Assert::exception(function () use ($input) {
-		$input->setValue(new \DateInterval('PT36H'));
-	}, Inteve\Forms\InvalidValueException::class, 'Invalid time in DateInterval.');
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
-
-	Assert::exception(function () use ($input) {
-		$input->setValue(TRUE);
-	}, Inteve\Forms\InvalidArgumentException::class, 'Value of type boolean is not supported.');
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
+	FormAssert::setValidValue(
+		$input,
+		new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateInterval('PT18H0M'),
+		'18:00'
+	);
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
 
-	Assert::null(getPostValue($input, ''));
-	Assert::null(getPostValue($input, '0:60'));
-	Assert::null(getPostValue($input, '24:00'));
+	FormAssert::setValidValue(
+		$input,
+		new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateInterval('PT18H0M'),
+		'18:00'
+	);
+});
 
-	Assert::equal(new DateInterval('PT0H0M'), getPostValue($input, '00:00'));
-	Assert::equal(new DateInterval('PT0H0M'), getPostValue($input, '00:00:00'));
-	Assert::equal(new DateInterval('PT18H'), getPostValue($input, '18:00'));
-	Assert::equal(new DateInterval('PT18H'), getPostValue($input, '18:00:30'));
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+
+	FormAssert::setValidValue(
+		$input,
+		$time = new \DateInterval('PT18H0M'),
+		$time,
+		'18:00'
+	);
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+
+	FormAssert::setValidValue(
+		$input,
+		$time = new \DateInterval('PT1H0M'),
+		$time,
+		'1:00'
+	);
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+
+	FormAssert::setInvalidValue(
+		$input,
+		new \DateInterval('PT36H'),
+		Inteve\Forms\InvalidValueException::class,
+		'Invalid time in DateInterval.'
+	);
+
+	FormAssert::setInvalidValue(
+		$input,
+		TRUE,
+		Inteve\Forms\InvalidArgumentException::class,
+		'Value of type boolean is not supported.'
+	);
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+
+	FormAssert::setValidHttpValue($input, '', NULL);
+	FormAssert::setValidHttpValue($input, '00:00', new DateInterval('PT0H0M'));
+	FormAssert::setValidHttpValue($input, '00:00:00', new DateInterval('PT0H0M'));
+	FormAssert::setValidHttpValue($input, '18:00', new DateInterval('PT18H'));
+	FormAssert::setValidHttpValue($input, '18:00:30', new DateInterval('PT18H'));
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+
+	FormAssert::setInvalidHttpValue($input, '0:60', ['Invalid time.']);
+	FormAssert::setInvalidHttpValue($input, '24:00', ['Invalid time.']);
+	FormAssert::setInvalidHttpValue($input, 'invalid', ['Invalid time.']);
+
+	$input = new Inteve\Forms\TimeInput(NULL, 'Custom invalid time.');
+
+	FormAssert::setInvalidHttpValue($input, '0:60', ['Custom invalid time.']);
+	FormAssert::setInvalidHttpValue($input, '24:00', ['Custom invalid time.']);
+	FormAssert::setInvalidHttpValue($input, 'invalid', ['Custom invalid time.']);
 });

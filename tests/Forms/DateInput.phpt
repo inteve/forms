@@ -1,78 +1,79 @@
 <?php
 
 use Tester\Assert;
+use Tests\FormAssert;
 
 require __DIR__ . '/../bootstrap.php';
 
 
 test(function () {
 	$input = new Inteve\Forms\DateInput;
-	Assert::null($input->getValue());
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
-	Assert::same('<input name="test" id="frm-test" value="">', toHtml($input, TRUE));
+	FormAssert::empty($input);
+	FormAssert::render($input, '<input name="test" id="frm-test" value="">');
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\DateInput;
-	$input->setValue(NULL);
-	Assert::null($input->getValue());
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\DateInput;
-	$input->setValue(new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')));
-	Assert::equal(new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')), $input->getValue());
-	Assert::same('1.1.2019', getHtmlValue($input));
-	Assert::true($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\DateInput;
-	$input->setValue(new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')));
-	Assert::equal(new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')), $input->getValue());
-	Assert::same('1.1.2019', getHtmlValue($input));
-	Assert::true($input->isFilled());
-});
-
-
-test(function () {
-	$input = new Inteve\Forms\DateInput;
-	$date = new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC'));
-	$input->setValue($date);
-	Assert::equal(new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')), $input->getValue());
-	Assert::same('1.1.2019', getHtmlValue($input));
-	Assert::true($input->isFilled());
+	FormAssert::setEmptyValue($input, NULL);
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\DateInput;
 
-	Assert::exception(function () use ($input) {
-		$input->setValue(TRUE);
-	}, Inteve\Forms\InvalidArgumentException::class, 'Value of type boolean is not supported.');
-	Assert::same('', getHtmlValue($input));
-	Assert::false($input->isFilled());
+	FormAssert::setValidValue(
+		$input,
+		new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')),
+		'1.1.2019'
+	);
 });
 
 
 test(function () {
 	$input = new Inteve\Forms\DateInput;
 
-	Assert::null(getPostValue($input, ''));
-	Assert::null(getPostValue($input, 'hello'));
-	Assert::null(getPostValue($input, ':24'));
-	Assert::null(getPostValue($input, '0:'));
-	Assert::null(getPostValue($input, '31.2.2018'));
-	Assert::null(getPostValue($input, '0.0.2018'));
-	Assert::null(getPostValue($input, '0.0.00'));
+	FormAssert::setValidValue(
+		$input,
+		new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')),
+		'1.1.2019'
+	);
+});
 
-	Assert::equal(new DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')), getPostValue($input, '1.01. 2019'));
-	Assert::equal(new DateTimeImmutable('2019-12-12', new \DateTimeZone('UTC')), getPostValue($input, '12. 12. 2019'));
+
+test(function () {
+	$input = new Inteve\Forms\DateInput;
+
+	FormAssert::setInvalidValue(
+		$input,
+		TRUE,
+		Inteve\Forms\InvalidArgumentException::class,
+		'Value of type boolean is not supported.'
+	);
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\DateInput;
+
+	FormAssert::setValidHttpValue($input, '', NULL);
+	FormAssert::setValidHttpValue($input, '1.01. 2019', new DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')));
+	FormAssert::setValidHttpValue($input, '12. 12. 2019', new DateTimeImmutable('2019-12-12 00:00:00', new \DateTimeZone('UTC')));
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\DateInput;
+
+	FormAssert::setInvalidHttpValue($input, 'hello', ['Invalid date.']);
+	FormAssert::setInvalidHttpValue($input, ':24', ['Invalid date.']);
+	FormAssert::setInvalidHttpValue($input, '0:', ['Invalid date.']);
+	FormAssert::setInvalidHttpValue($input, '31.2.2018', ['Invalid date.']);
+	FormAssert::setInvalidHttpValue($input, '0.0.2018', ['Invalid date.']);
+	FormAssert::setInvalidHttpValue($input, '0.0.00', ['Invalid date.']);
+
+	$input = new Inteve\Forms\DateInput(NULL, 'Custom invalid date.');
+	FormAssert::setInvalidHttpValue($input, 'hello', ['Custom invalid date.']);
 });
