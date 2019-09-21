@@ -14,7 +14,7 @@
 		}
 
 
-		public static function empty($input)
+		public static function blank($input)
 		{
 			Assert::null($input->getValue());
 			Assert::same('', self::getHtmlValue($input));
@@ -25,7 +25,7 @@
 		public static function setEmptyValue($input, $value)
 		{
 			$input->setValue($value);
-			self::empty($input);
+			self::blank($input);
 		}
 
 
