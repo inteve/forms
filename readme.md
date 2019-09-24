@@ -22,7 +22,7 @@ DateInput
 ---------
 
 ```php
-$form['date'] = new Inteve\Forms\TimeInput('Date:', 'Error message for invalid date.');
+$form['date'] = new Inteve\Forms\DateInput('Date:', 'Error message for invalid date.');
 $form['date']->setDefaultValue(new \DateTimeImmutable('2018-01-01 20:18'));
 $form['date']->setDefaultValue(new \DateTime('2018-01-01 20:18'));
 
