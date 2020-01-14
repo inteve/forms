@@ -30,6 +30,24 @@ $form['date']->getValue(); // DateTimeImmutable|NULL
 ```
 
 
+DateTimeInput
+-------------
+
+```php
+$form['datetime'] = new Inteve\Forms\DateTimeInput('Datetime:', 'Error message for invalid datetime.');
+$form['datetime']->setDefaultValue(new \DateTimeImmutable('2018-01-01 20:18'));
+$form['datetime']->setDefaultValue(new \DateTime('2018-01-01 20:18'));
+
+$form['datetime']->getValue(); // DateTimeImmutable|NULL
+```
+
+You can set timezone for HTML value.
+
+```php
+$form['datetime'] = new Inteve\Forms\DateTimeInput('Datetime:', $errorMessage, 'Europe/Prague');
+```
+
+
 TimeInput
 ---------
 
