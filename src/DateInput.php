@@ -30,7 +30,7 @@
 
 
 		/**
-		 * @param  \DateTime|NULL
+		 * @param  \DateTimeInterface|NULL
 		 * @return void
 		 */
 		public function setValue($value)

@@ -27,7 +27,7 @@
 
 
 		/**
-		 * @param  \DateTime|NULL
+		 * @param  \DateTimeInterface|\DateInterval|NULL
 		 * @return void
 		 */
 		public function setValue($value)
