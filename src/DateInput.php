@@ -98,6 +98,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
+			$control->type = 'text';
 			$control->value = $this->rawValue;
 			return $control;
 		}

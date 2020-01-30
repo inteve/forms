@@ -9,7 +9,7 @@ require __DIR__ . '/../bootstrap.php';
 test(function () {
 	$input = new Inteve\Forms\DateInput;
 	FormAssert::blank($input);
-	FormAssert::render($input, '<input name="test" id="frm-test" value="">');
+	FormAssert::render($input, '<input type="text" name="test" id="frm-test" value="">');
 });
 
 
