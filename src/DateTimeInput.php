@@ -23,6 +23,9 @@
 		/** @var \DateTimeZone|NULL */
 		private $timezone;
 
+		/** @var string */
+		private $htmlType = 'datetime-local';
+
 
 		public function __construct($caption = NULL, $errorMessage = 'Invalid datetime.', $timezone = NULL)
 		{
@@ -30,6 +33,16 @@
 			$this->setRequired(FALSE);
 			$this->addRule([__CLASS__, 'validateInput'], $errorMessage);
 			$this->timezone = ($timezone instanceof \DateTimeZone || $timezone === NULL) ? $timezone : new \DateTimeZone($timezone);
+		}
+
+
+		/**
+		 * @return static
+		 */
+		public function showAsTextInput()
+		{
+			$this->htmlType = 'text';
+			return $this;
 		}
 
 
@@ -130,7 +143,7 @@
 		{
 			$control = parent::getControl();
 			$control->value = $this->rawValue;
-			$control->type = 'datetime-local';
+			$control->type = $this->htmlType;
 			return $control;
 		}
 

@@ -20,12 +20,25 @@
 		/** @var string */
 		private $rawValue = '';
 
+		/** @var string */
+		private $htmlType = 'date';
+
 
 		public function __construct($caption = NULL, $errorMessage = 'Invalid date.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
 			$this->addRule([__CLASS__, 'validateDate'], $errorMessage);
+		}
+
+
+		/**
+		 * @return static
+		 */
+		public function showAsTextInput()
+		{
+			$this->htmlType = 'text';
+			return $this;
 		}
 
 
@@ -45,7 +58,7 @@
 				$this->day = (int) $value->format('j');
 				$this->month = (int) $value->format('n');
 				$this->year = (int) $value->format('Y');
-				$this->rawValue = $value->format('j.n.Y');
+				$this->rawValue = $value->format($this->htmlType === 'text' ? 'j.n.Y' : 'Y-m-d');
 
 			} else {
 				throw new InvalidArgumentException('Value of type ' . gettype($value) . ' is not supported.');
@@ -85,10 +98,19 @@
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$this->rawValue = $value;
-			$parts = explode('.', $value, 3);
-			$this->day = isset($parts[0]) ? Helpers::toInt($parts[0]) : NULL;
-			$this->month = isset($parts[1]) ? Helpers::toInt($parts[1]) : NULL;
-			$this->year = isset($parts[2]) ? Helpers::toInt($parts[2]) : NULL;
+
+			if (preg_match('/\d{4}-\d{2}-\d{2}/', $value)) {
+				$parts = explode('-', $value, 3);
+				$this->day = isset($parts[2]) ? Helpers::toInt($parts[2]) : NULL;
+				$this->month = isset($parts[1]) ? Helpers::toInt($parts[1]) : NULL;
+				$this->year = isset($parts[0]) ? Helpers::toInt($parts[0]) : NULL;
+
+			} else {
+				$parts = explode('.', $value, 3);
+				$this->day = isset($parts[0]) ? Helpers::toInt($parts[0]) : NULL;
+				$this->month = isset($parts[1]) ? Helpers::toInt($parts[1]) : NULL;
+				$this->year = isset($parts[2]) ? Helpers::toInt($parts[2]) : NULL;
+			}
 		}
 
 
@@ -98,7 +120,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
-			$control->type = 'text';
+			$control->type = $this->htmlType;
 			$control->value = $this->rawValue;
 			return $control;
 		}

@@ -15,6 +15,13 @@ test(function () {
 
 test(function () {
 	$input = new Inteve\Forms\DateTimeInput;
+	$input->showAsTextInput();
+	FormAssert::render($input, '<input type="text" name="test" id="frm-test" value="">');
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\DateTimeInput;
 	FormAssert::errors($input, []);
 
 	$input = new Inteve\Forms\DateTimeInput(NULL, 'Custom error message');

@@ -9,6 +9,13 @@ require __DIR__ . '/../bootstrap.php';
 test(function () {
 	$input = new Inteve\Forms\DateInput;
 	FormAssert::blank($input);
+	FormAssert::render($input, '<input type="date" name="test" id="frm-test" value="">');
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\DateInput;
+	$input->showAsTextInput();
 	FormAssert::render($input, '<input type="text" name="test" id="frm-test" value="">');
 });
 
@@ -43,6 +50,16 @@ test(function () {
 		$input,
 		new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
 		new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')),
+		'2019-01-01'
+	);
+
+	$input = new Inteve\Forms\DateInput;
+	$input->showAsTextInput();
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')),
 		'1.1.2019'
 	);
 });
@@ -50,6 +67,16 @@ test(function () {
 
 test(function () {
 	$input = new Inteve\Forms\DateInput;
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
+		new \DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')),
+		'2019-01-01'
+	);
+
+	$input = new Inteve\Forms\DateInput;
+	$input->showAsTextInput();
 
 	FormAssert::setValidValue(
 		$input,
@@ -78,6 +105,7 @@ test(function () {
 	FormAssert::setValidHttpValue($input, '', NULL);
 	FormAssert::setValidHttpValue($input, '1.01. 2019', new DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')));
 	FormAssert::setValidHttpValue($input, '12. 12. 2019', new DateTimeImmutable('2019-12-12 00:00:00', new \DateTimeZone('UTC')));
+	FormAssert::setValidHttpValue($input, '2019-01-01', new DateTimeImmutable('2019-01-01 00:00:00', new \DateTimeZone('UTC')));
 });
 
 

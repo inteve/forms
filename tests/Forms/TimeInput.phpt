@@ -9,6 +9,13 @@ require __DIR__ . '/../bootstrap.php';
 test(function () {
 	$input = new Inteve\Forms\TimeInput;
 	FormAssert::blank($input);
+	FormAssert::render($input, '<input type="time" name="test" id="frm-test" value="">');
+});
+
+
+test(function () {
+	$input = new Inteve\Forms\TimeInput;
+	$input->showAsTextInput();
 	FormAssert::render($input, '<input type="text" name="test" id="frm-test" value="">');
 });
 
@@ -43,7 +50,24 @@ test(function () {
 		$input,
 		new \DateTime('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
 		new \DateInterval('PT18H0M'),
-		'18:00'
+		'18:00:00'
+	);
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateTime('2019-01-01 8:00:00', new \DateTimeZone('UTC')),
+		new \DateInterval('PT8H0M'),
+		'08:00:00'
+	);
+
+	$input = new Inteve\Forms\TimeInput;
+	$input->showAsTextInput();
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateTime('2019-01-01 8:00:00', new \DateTimeZone('UTC')),
+		new \DateInterval('PT8H0M'),
+		'8:00'
 	);
 });
 
@@ -55,7 +79,7 @@ test(function () {
 		$input,
 		new \DateTimeImmutable('2019-01-01 18:00:00', new \DateTimeZone('UTC')),
 		new \DateInterval('PT18H0M'),
-		'18:00'
+		'18:00:00'
 	);
 });
 
@@ -67,7 +91,7 @@ test(function () {
 		$input,
 		$time = new \DateInterval('PT18H0M'),
 		$time,
-		'18:00'
+		'18:00:00'
 	);
 });
 
@@ -79,7 +103,7 @@ test(function () {
 		$input,
 		$time = new \DateInterval('PT1H0M'),
 		$time,
-		'1:00'
+		'01:00:00'
 	);
 });
 

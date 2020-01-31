@@ -17,12 +17,25 @@
 		/** @var string */
 		private $rawValue = '';
 
+		/** @var string */
+		private $htmlType = 'time';
+
 
 		public function __construct($caption = NULL, $errorMessage = 'Invalid time.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
 			$this->addRule([__CLASS__, 'validateTime'], $errorMessage);
+		}
+
+
+		/**
+		 * @return static
+		 */
+		public function showAsTextInput()
+		{
+			$this->htmlType = 'text';
+			return $this;
 		}
 
 
@@ -40,12 +53,12 @@
 			} elseif ($value instanceof \DateTimeInterface) {
 				$this->hour = (int) $value->format('G');
 				$this->minute = (int) $value->format('i');
-				$this->rawValue = $value->format('G:i');
+				$this->rawValue = $value->format($this->htmlType === 'text' ? 'G:i' : 'H:i:s');
 
 			} elseif ($value instanceof \DateInterval) {
 				$this->hour = (int) $value->format('%h');
 				$this->minute = (int) $value->format('%I');
-				$this->rawValue = $value->format('%h:%I');
+				$this->rawValue = $value->format($this->htmlType === 'text' ? '%h:%I' : '%H:%I:%S');
 
 				if (!self::validateTime($this)) {
 					$this->setValue(NULL);
@@ -99,7 +112,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
-			$control->type = 'text';
+			$control->type = $this->htmlType;
 			$control->value = $this->rawValue;
 			return $control;
 		}
