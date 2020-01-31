@@ -53,12 +53,12 @@
 			} elseif ($value instanceof \DateTimeInterface) {
 				$this->hour = (int) $value->format('G');
 				$this->minute = (int) $value->format('i');
-				$this->rawValue = $value->format($this->htmlType === 'text' ? 'G:i' : 'H:i:s');
+				$this->rawValue = $value->format($this->htmlType === 'text' ? 'G:i' : 'H:i:00');
 
 			} elseif ($value instanceof \DateInterval) {
 				$this->hour = (int) $value->format('%h');
 				$this->minute = (int) $value->format('%I');
-				$this->rawValue = $value->format($this->htmlType === 'text' ? '%h:%I' : '%H:%I:%S');
+				$this->rawValue = $value->format($this->htmlType === 'text' ? '%h:%I' : '%H:%I:00');
 
 				if (!self::validateTime($this)) {
 					$this->setValue(NULL);

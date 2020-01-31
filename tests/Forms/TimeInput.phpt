@@ -55,6 +55,13 @@ test(function () {
 
 	FormAssert::setValidValue(
 		$input,
+		new \DateTime('2019-01-01 18:30:45', new \DateTimeZone('UTC')),
+		new \DateInterval('PT18H30M'),
+		'18:30:00'
+	);
+
+	FormAssert::setValidValue(
+		$input,
 		new \DateTime('2019-01-01 8:00:00', new \DateTimeZone('UTC')),
 		new \DateInterval('PT8H0M'),
 		'08:00:00'
@@ -81,6 +88,13 @@ test(function () {
 		new \DateInterval('PT18H0M'),
 		'18:00:00'
 	);
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateTimeImmutable('2019-01-01 18:30:45', new \DateTimeZone('UTC')),
+		new \DateInterval('PT18H30M'),
+		'18:30:00'
+	);
 });
 
 
@@ -92,6 +106,13 @@ test(function () {
 		$time = new \DateInterval('PT18H0M'),
 		$time,
 		'18:00:00'
+	);
+
+	FormAssert::setValidValue(
+		$input,
+		new \DateInterval('PT18H30M45S'),
+		new \DateInterval('PT18H30M'),
+		'18:30:00'
 	);
 });
 
