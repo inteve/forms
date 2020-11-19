@@ -107,6 +107,14 @@
 
 			$m = Strings::match($value, '#^(?P<yyyy>\d{4})-(?P<mm>\d{2})-(?P<dd>\d{2})T(?P<hh>\d{2}):(?P<ii>\d{2}):(?P<ss>\d{2})#');
 
+			if (!is_array($m)) {
+				$m = Strings::match($value, '#^(?P<yyyy>\d{4})-(?P<mm>\d{2})-(?P<dd>\d{2})T(?P<hh>\d{2}):(?P<ii>\d{2})#');
+
+				if (is_array($m)) {
+					$m['ss'] = '00';
+				}
+			}
+
 			if (is_array($m)) {
 				$yyyy = $m['yyyy'];
 				$mm = $m['mm'];
