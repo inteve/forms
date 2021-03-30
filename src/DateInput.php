@@ -24,6 +24,10 @@
 		private $htmlType = 'date';
 
 
+		/**
+		 * @param string|NULL $caption
+		 * @param string $errorMessage
+		 */
 		public function __construct($caption = NULL, $errorMessage = 'Invalid date.')
 		{
 			parent::__construct($caption);
@@ -43,8 +47,8 @@
 
 
 		/**
-		 * @param  \DateTimeInterface|NULL
-		 * @return void
+		 * @param  \DateTimeInterface|NULL $value
+		 * @return static
 		 */
 		public function setValue($value)
 		{
@@ -63,6 +67,8 @@
 			} else {
 				throw new InvalidArgumentException('Value of type ' . gettype($value) . ' is not supported.');
 			}
+
+			return $this;
 		}
 
 
@@ -120,6 +126,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
+			assert($control instanceof Nette\Utils\Html);
 			$control->type = $this->htmlType;
 			$control->value = $this->rawValue;
 			return $control;
@@ -129,7 +136,7 @@
 		/**
 		 * @return bool
 		 */
-		public static function validateDate(Nette\Forms\IControl $control)
+		public static function validateDate(self $control)
 		{
 			if ($control->year !== NULL && $control->month !== NULL && $control->day !== NULL) {
 				return checkdate($control->month, $control->day, $control->year);

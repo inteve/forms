@@ -12,7 +12,7 @@
 
 
 		/**
-		 * @param  string
+		 * @param  string $value
 		 * @return int|NULL
 		 */
 		public static function toInt($value)

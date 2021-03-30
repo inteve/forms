@@ -27,6 +27,11 @@
 		private $htmlType = 'datetime-local';
 
 
+		/**
+		 * @param string|NULL $caption
+		 * @param string $errorMessage
+		 * @param \DateTimezone|string|NULL $timezone
+		 */
 		public function __construct($caption = NULL, $errorMessage = 'Invalid datetime.', $timezone = NULL)
 		{
 			parent::__construct($caption);
@@ -47,8 +52,8 @@
 
 
 		/**
-		 * @param  \DateTimeInterface|NULL
-		 * @return void
+		 * @param  \DateTimeImmutable|\DateTime|NULL $value
+		 * @return static
 		 */
 		public function setValue($value)
 		{
@@ -57,7 +62,7 @@
 				$this->rawValue = '';
 				$this->isValid = TRUE;
 
-			} elseif ($value instanceof \DateTimeInterface) {
+			} elseif (($value instanceof \DateTime) || ($value instanceof \DateTimeImmutable)) {
 				if ($value instanceof \DateTime) {
 					$value = \DateTimeImmutable::createFromMutable($value);
 				}
@@ -74,6 +79,8 @@
 			} else {
 				throw new InvalidArgumentException('Value of type ' . gettype($value) . ' is not supported.');
 			}
+
+			return $this;
 		}
 
 
@@ -150,6 +157,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
+			assert($control instanceof Nette\Utils\Html);
 			$control->value = $this->rawValue;
 			$control->type = $this->htmlType;
 			return $control;
@@ -159,7 +167,7 @@
 		/**
 		 * @return bool
 		 */
-		public static function validateInput(Nette\Forms\IControl $control)
+		public static function validateInput(self $control)
 		{
 			return $control->isValid;
 		}

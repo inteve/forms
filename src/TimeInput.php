@@ -21,6 +21,10 @@
 		private $htmlType = 'time';
 
 
+		/**
+		 * @param string|NULL $caption
+		 * @param string $errorMessage
+		 */
 		public function __construct($caption = NULL, $errorMessage = 'Invalid time.')
 		{
 			parent::__construct($caption);
@@ -40,8 +44,8 @@
 
 
 		/**
-		 * @param  \DateTimeInterface|\DateInterval|NULL
-		 * @return void
+		 * @param  \DateTimeInterface|\DateInterval|NULL $value
+		 * @return static
 		 */
 		public function setValue($value)
 		{
@@ -68,6 +72,8 @@
 			} else {
 				throw new InvalidArgumentException('Value of type ' . gettype($value) . ' is not supported.');
 			}
+
+			return $this;
 		}
 
 
@@ -112,6 +118,7 @@
 		public function getControl()
 		{
 			$control = parent::getControl();
+			assert($control instanceof Nette\Utils\Html);
 			$control->type = $this->htmlType;
 			$control->value = $this->rawValue;
 			return $control;
@@ -121,7 +128,7 @@
 		/**
 		 * @return bool
 		 */
-		public static function validateTime(Nette\Forms\IControl $control)
+		public static function validateTime(self $control)
 		{
 			if ($control->hour !== NULL && $control->minute !== NULL) {
 				if ($control->hour < 0 || $control->hour > 23) {
