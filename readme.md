@@ -61,6 +61,13 @@ $form['time']->getValue(); // DateInterval|NULL
 ```
 
 
+Others
+------
+
+* UrlPathInput
+* UrlSlugInput
+
+
 ------------------------------
 
 License: [New BSD License](license.md)

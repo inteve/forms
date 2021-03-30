@@ -18,10 +18,12 @@
 		"nette/utils": "^2.4"
 	},
 	"require-dev": {
+		"inteve/types": "^0.4",
 		"nette/application": "^2.4",
 		"nette/tester": "^2.0"
 	},
 	"suggest": {
+		"inteve/types": "For UrlSlugInput and UrlPathInput",
 		"nette/application": "For Inteve\\Forms\\FormFactory."
 	}
 }
