@@ -1,7 +1,7 @@
 Inteve\Forms
 ============
 
-[![Build Status](https://travis-ci.org/inteve/forms.svg?branch=master)](https://travis-ci.org/inteve/forms)
+[![Tests Status](https://github.com/inteve/forms/workflows/Tests/badge.svg)](https://github.com/inteve/forms/actions)
 
 Controls for Nette\Forms.
 
