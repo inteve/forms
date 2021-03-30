@@ -64,6 +64,7 @@ $form['time']->getValue(); // DateInterval|NULL
 Others
 ------
 
+* HtmlInput
 * UrlPathInput
 * UrlSlugInput
 
