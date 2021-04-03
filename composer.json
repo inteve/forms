@@ -24,6 +24,6 @@
 	},
 	"suggest": {
 		"inteve/types": "For UrlSlugInput and UrlPathInput",
-		"nette/application": "For Inteve\\Forms\\FormFactory."
+		"nette/application": "For Inteve\\Forms\\IFormFactory."
 	}
 }

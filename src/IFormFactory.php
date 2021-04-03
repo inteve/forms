@@ -8,7 +8,7 @@
 	interface IFormFactory
 	{
 		/**
-		 * @return Nette\Forms\Form
+		 * @return Nette\Application\UI\Form
 		 */
 		function create();
 	}
