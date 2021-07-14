@@ -77,8 +77,8 @@
 		public function loadHttpData()
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
-			$this->rawValue = $value;
 			$this->slug = $value !== '' ? UrlSlug::fromString($value) : NULL;
+			$this->rawValue = $this->slug !== NULL ? $this->slug->toString() : $value;
 		}
 
 
