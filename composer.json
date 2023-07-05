@@ -25,6 +25,11 @@
 		"nette/application": "^2.4",
 		"nette/tester": "^2.0"
 	},
+	"extra": {
+		"phpstan-extensions": [
+			"phpstan/phpstan-nette"
+		]
+	},
 	"suggest": {
 		"inteve/types": "For UrlSlugInput and UrlPathInput",
 		"nette/application": "For Inteve\\Forms\\IFormFactory."
