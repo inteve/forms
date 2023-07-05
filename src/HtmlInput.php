@@ -77,7 +77,7 @@
 		public function getValue()
 		{
 			$value = parent::getValue();
-			return $value !== NULL ? new Html($value) : NULL;
+			return is_string($value) ? new Html($value) : NULL;
 		}
 
 
@@ -87,7 +87,9 @@
 		 */
 		public function loadHttpData()
 		{
-			parent::setValue($this->getHttpData(Form::DATA_TEXT));
+			$value = $this->getHttpData(Form::DATA_TEXT);
+			$value = is_string($value) ? $value : '';
+			parent::setValue($value);
 		}
 
 

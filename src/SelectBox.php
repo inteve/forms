@@ -48,9 +48,10 @@
 		public function loadHttpData()
 		{
 			parent::loadHttpData();
+			$value = is_string($this->value) ? $this->value : '';
 
-			if ($this->itemsProvider !== NULL && ((string) $this->value) !== '') {
-				$items = call_user_func($this->itemsProvider, $this->value);
+			if ($this->itemsProvider !== NULL && $value !== '') {
+				$items = call_user_func($this->itemsProvider, $value);
 				$this->setItems($items);
 			}
 		}

@@ -105,6 +105,7 @@
 		public function loadHttpData()
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
+			$value = is_string($value) ? $value : '';
 			$this->rawValue = $value;
 			$parts = explode(':', $value, 3);
 			$this->hour = isset($parts[0]) ? Helpers::toInt($parts[0]) : NULL;

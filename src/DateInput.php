@@ -103,6 +103,7 @@
 		public function loadHttpData()
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
+			$value = is_string($value) ? $value : '';
 			$this->rawValue = $value;
 
 			if (preg_match('/\d{4}-\d{2}-\d{2}/', $value)) {

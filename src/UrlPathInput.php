@@ -77,6 +77,7 @@
 		public function loadHttpData()
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
+			$value = is_string($value) ? $value : '';
 			$this->path = $value !== '' ? UrlPath::fromString($value) : NULL;
 			$this->rawValue = $this->path !== NULL ? $this->path->toString() : $value;
 		}

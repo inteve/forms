@@ -108,6 +108,7 @@
 		public function loadHttpData()
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
+			$value = is_string($value) ? $value : '';
 			$this->rawValue = $value;
 			$this->datetimeValue = NULL;
 			$this->isValid = FALSE;
