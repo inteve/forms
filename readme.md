@@ -1,7 +1,10 @@
 Inteve\Forms
 ============
 
-[![Tests Status](https://github.com/inteve/forms/workflows/Tests/badge.svg)](https://github.com/inteve/forms/actions)
+[![Build Status](https://github.com/inteve/forms/workflows/Build/badge.svg)](https://github.com/inteve/forms/actions)
+[![Downloads this Month](https://img.shields.io/packagist/dm/inteve/forms.svg)](https://packagist.org/packages/inteve/forms)
+[![Latest Stable Version](https://poser.pugx.org/inteve/forms/v/stable)](https://github.com/inteve/forms/releases)
+[![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/inteve/forms/blob/master/license.md)
 
 Controls for Nette\Forms.
 
