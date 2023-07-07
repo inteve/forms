@@ -74,6 +74,7 @@
 			$rules->validate();
 			$errors = $input->getErrors();
 			unset($form['test']);
+			Assert::same($expectedErrors, $errors);
 			return $errors;
 		}
 
