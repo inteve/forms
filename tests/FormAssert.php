@@ -124,7 +124,11 @@
 		{
 			$form = new Nette\Forms\Form;
 			$form->setMethod('POST');
-			$form->allowCrossOrigin();
+
+			if (method_exists($form, 'allowCrossOrigin')) {
+				$form->allowCrossOrigin();
+			}
+
 			$form->httpRequest = new Nette\Http\Request(
 				new Nette\Http\UrlScript("http://localhost/test"),
 				$postData,
