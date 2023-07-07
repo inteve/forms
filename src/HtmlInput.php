@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Inteve\Types\Html;
@@ -16,11 +18,7 @@
 		private $fileBrowserUrl;
 
 
-		/**
-		 * @param string|NULL $caption
-		 * @param int|NULL $rows
-		 */
-		public function __construct($caption = NULL, $rows = NULL)
+		public function __construct(?string $caption = NULL, ?int $rows = NULL)
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -30,10 +28,9 @@
 
 
 		/**
-		 * @param  string $htmlClass
 		 * @return self
 		 */
-		public function setHtmlClass($htmlClass)
+		public function setHtmlClass(string $htmlClass)
 		{
 			$this->htmlClass = $htmlClass;
 			return $this;
@@ -41,10 +38,9 @@
 
 
 		/**
-		 * @param  string|NULL $fileBrowserUrl
 		 * @return self
 		 */
-		public function setFileBrowserUrl($fileBrowserUrl)
+		public function setFileBrowserUrl(?string $fileBrowserUrl)
 		{
 			$this->fileBrowserUrl = $fileBrowserUrl;
 			return $this;
@@ -71,21 +67,14 @@
 		}
 
 
-		/**
-		 * @return Html|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?Html
 		{
 			$value = parent::getValue();
 			return is_string($value) ? new Html($value) : NULL;
 		}
 
 
-		/**
-		 * Loads HTTP data.
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_TEXT);
 			$value = is_string($value) ? $value : '';
@@ -93,11 +82,7 @@
 		}
 
 
-		/**
-		 * Generates control's HTML element.
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			return parent::getControl()
 				->appendAttribute('class', $this->htmlClass)

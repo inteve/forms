@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Nette;
@@ -24,11 +26,7 @@
 		private $htmlType = 'date';
 
 
-		/**
-		 * @param string|NULL $caption
-		 * @param string $errorMessage
-		 */
-		public function __construct($caption = NULL, $errorMessage = 'Invalid date.')
+		public function __construct(?string $caption = NULL, string $errorMessage = 'Invalid date.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -72,10 +70,7 @@
 		}
 
 
-		/**
-		 * @return \DateTimeImmutable|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?\DateTimeImmutable
 		{
 			if (self::validateDate($this)) {
 				return new \DateTimeImmutable(
@@ -88,19 +83,13 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -121,10 +110,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);
@@ -134,10 +120,7 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public static function validateDate(self $control)
+		public static function validateDate(self $control): bool
 		{
 			if ($control->year !== NULL && $control->month !== NULL && $control->day !== NULL) {
 				return checkdate($control->month, $control->day, $control->year);

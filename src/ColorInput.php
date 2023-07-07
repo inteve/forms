@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Inteve\Types\HexColor;
@@ -16,11 +18,7 @@
 		private $rawValue = '';
 
 
-		/**
-		 * @param string|NULL $caption
-		 * @param string $errorMessage
-		 */
-		public function __construct($caption = NULL, $errorMessage = 'Invalid value.')
+		public function __construct(?string $caption = NULL, string $errorMessage = 'Invalid value.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -50,28 +48,19 @@
 		}
 
 
-		/**
-		 * @return HexColor|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?HexColor
 		{
 			return $this->color;
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -88,10 +77,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);
@@ -102,10 +88,7 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public static function validateColor(self $control)
+		public static function validateColor(self $control): bool
 		{
 			return $control->color !== NULL;
 		}

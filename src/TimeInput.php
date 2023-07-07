@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Nette;
@@ -25,7 +27,7 @@
 		 * @param string|NULL $caption
 		 * @param string $errorMessage
 		 */
-		public function __construct($caption = NULL, $errorMessage = 'Invalid time.')
+		public function __construct(?string $caption = NULL, string $errorMessage = 'Invalid time.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -77,10 +79,7 @@
 		}
 
 
-		/**
-		 * @return \DateInterval|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?\DateInterval
 		{
 			if (self::validateTime($this)) {
 				return new \DateInterval('PT' . $this->hour . 'H' . $this->minute . 'M');
@@ -90,19 +89,13 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -113,10 +106,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);
@@ -126,10 +116,7 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public static function validateTime(self $control)
+		public static function validateTime(self $control): bool
 		{
 			if ($control->hour !== NULL && $control->minute !== NULL) {
 				if ($control->hour < 0 || $control->hour > 23) {

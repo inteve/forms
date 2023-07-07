@@ -1,10 +1,13 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Nette;
 	use Nette\Forms\Form;
 	use Nette\Utils\Strings;
+	use Nette\Utils\Validators;
 
 
 	class DateTimeInput extends Nette\Forms\Controls\BaseControl
@@ -28,11 +31,9 @@
 
 
 		/**
-		 * @param string|NULL $caption
-		 * @param string $errorMessage
 		 * @param \DateTimezone|string|NULL $timezone
 		 */
-		public function __construct($caption = NULL, $errorMessage = 'Invalid datetime.', $timezone = NULL)
+		public function __construct(?string $caption = NULL, string $errorMessage = 'Invalid datetime.', $timezone = NULL)
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -84,28 +85,19 @@
 		}
 
 
-		/**
-		 * @return \DateTimeImmutable|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?\DateTimeImmutable
 		{
 			return $this->datetimeValue;
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -124,12 +116,16 @@
 			}
 
 			if (is_array($m)) {
-				$yyyy = $m['yyyy'];
-				$mm = $m['mm'];
-				$dd = $m['dd'];
-				$hh = $m['hh'];
-				$ii = $m['ii'];
-				$ss = $m['ss'];
+				$yyyy = Validators::isNumericInt($m['yyyy']) ? ((int) $m['yyyy']) : NULL;
+				$mm = Validators::isNumericInt($m['mm']) ? ((int) $m['mm']) : NULL;
+				$dd = Validators::isNumericInt($m['dd']) ? ((int) $m['dd']) : NULL;
+				$hh = Validators::isNumericInt($m['hh']) ? ((int) $m['hh']) : NULL;
+				$ii = Validators::isNumericInt($m['ii']) ? ((int) $m['ii']) : NULL;
+				$ss = Validators::isNumericInt($m['ss']) ? ((int) $m['ss']) : NULL;
+
+				if (!isset($yyyy, $mm, $dd, $hh, $ii, $ss)) {
+					return;
+				}
 
 				if (!checkdate($mm, $dd, $yyyy)) {
 					return;
@@ -152,10 +148,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);
@@ -165,10 +158,7 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public static function validateInput(self $control)
+		public static function validateInput(self $control): bool
 		{
 			return $control->isValid;
 		}

@@ -17,7 +17,7 @@ Installation
 composer require inteve/forms
 ```
 
-Library requires PHP 5.6 or later.
+Library requires PHP 7.2 or later.
 
 
 DateInput

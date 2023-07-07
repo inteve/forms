@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Inteve\Types\Decimal;
@@ -22,12 +24,7 @@
 		private $isValid = TRUE;
 
 
-		/**
-		 * @param string|NULL $caption
-		 * @param int|NULL $places
-		 * @param string $errorMessage
-		 */
-		public function __construct($caption = NULL, $places = NULL, $errorMessage = 'Invalid value.2')
+		public function __construct(?string $caption = NULL, ?int $places = NULL, string $errorMessage = 'Invalid value.')
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -61,28 +58,19 @@
 		}
 
 
-		/**
-		 * @return Decimal|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?Decimal
 		{
 			return $this->decimal;
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -103,10 +91,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);
@@ -117,10 +102,7 @@
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public static function validateValue(self $control)
+		public static function validateValue(self $control): bool
 		{
 			return $control->isValid;
 		}

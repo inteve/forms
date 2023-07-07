@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Nette\Application\UI\Form;
@@ -10,10 +12,7 @@
 		use \Nette\SmartObject;
 
 
-		/**
-		 * @return Form
-		 */
-		public function create()
+		public function create(): Form
 		{
 			return new Form;
 		}

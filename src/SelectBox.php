@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Nette;
@@ -12,10 +14,9 @@
 
 
 		/**
-		 * @param string|NULL $label
 		 * @param array<mixed>|null $items
 		 */
-		public function __construct($label = NULL, array $items = NULL)
+		public function __construct(?string $label = NULL, array $items = NULL)
 		{
 			parent::__construct($label, $items);
 			$this->control->appendAttribute('class', 'input--selectbox');
@@ -23,10 +24,9 @@
 
 
 		/**
-		 * @param  string $url
 		 * @return static
 		 */
-		public function setRemoteSource($url, callable $itemsProvider)
+		public function setRemoteSource(string $url, callable $itemsProvider)
 		{
 			$this->setHtmlAttribute('data-source-url', $url);
 			$this->itemsProvider = $itemsProvider;
@@ -35,17 +35,16 @@
 
 
 		/**
-		 * @param  string $url
 		 * @return static
 		 */
-		public function enableCreate($url)
+		public function enableCreate(string $url)
 		{
 			$this->setHtmlAttribute('data-create-url', $url);
 			return $this;
 		}
 
 
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			parent::loadHttpData();
 			$value = is_string($this->value) ? $this->value : '';

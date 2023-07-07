@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 
@@ -11,11 +13,7 @@
 		}
 
 
-		/**
-		 * @param  string $value
-		 * @return int|NULL
-		 */
-		public static function toInt($value)
+		public static function toInt(string $value): ?int
 		{
 			$value = trim($value);
 

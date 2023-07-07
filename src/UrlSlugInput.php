@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Inteve\Forms;
 
 	use Inteve\Types\UrlSlug;
@@ -19,11 +21,7 @@
 		private $maxLength;
 
 
-		/**
-		 * @param string|NULL $caption
-		 * @param int|NULL $maxLength
-		 */
-		public function __construct($caption = NULL, $maxLength = NULL)
+		public function __construct(?string $caption = NULL, ?int $maxLength = NULL)
 		{
 			parent::__construct($caption);
 			$this->setRequired(FALSE);
@@ -53,28 +51,19 @@
 		}
 
 
-		/**
-		 * @return UrlSlug|NULL
-		 */
-		public function getValue()
+		public function getValue(): ?UrlSlug
 		{
 			return $this->slug;
 		}
 
 
-		/**
-		 * @return bool
-		 */
-		public function isFilled()
+		public function isFilled(): bool
 		{
 			return $this->rawValue !== '';
 		}
 
 
-		/**
-		 * @return void
-		 */
-		public function loadHttpData()
+		public function loadHttpData(): void
 		{
 			$value = $this->getHttpData(Form::DATA_LINE);
 			$value = is_string($value) ? $value : '';
@@ -83,10 +72,7 @@
 		}
 
 
-		/**
-		 * @return Nette\Utils\Html
-		 */
-		public function getControl()
+		public function getControl(): Nette\Utils\Html
 		{
 			$control = parent::getControl();
 			assert($control instanceof Nette\Utils\Html);

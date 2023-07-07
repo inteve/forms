@@ -1,5 +1,7 @@
 <?php
 
+	declare(strict_types=1);
+
 	namespace Tests;
 
 	use Nette;
@@ -66,7 +68,7 @@
 
 		public static function errors($input, array $expectedErrors)
 		{
-			$form = new Nette\Forms\Form;
+			$form = self::createForm();
 			$form['test'] = $input;
 			$rules = $input->getRules();
 			$rules->validate();
@@ -99,23 +101,40 @@
 
 		private static function loadHttpValue($input, $httpValue)
 		{
-			$_SERVER['REQUEST_METHOD'] = 'POST';
-			$_POST = [
+			$form = self::createForm([
 				'test' => $httpValue,
-			];
-			$_FILES = [];
-
-			$form = new Nette\Forms\Form;
+			]);
 			$form['test'] = $input;
 			$value = $input->getValue();
 			$rules = $input->getRules();
 			$rules->validate();
 			$errors = $input->getErrors();
 			unset($form['test']);
-			$_POST = [];
 			return [
 				'value' => $value,
 				'errors' => $errors,
 			];
+		}
+
+
+		private static function createForm(
+			array $postData = []
+		)
+		{
+			$form = new Nette\Forms\Form;
+			$form->setMethod('POST');
+			$form->allowCrossOrigin();
+			$form->httpRequest = new Nette\Http\Request(
+				new Nette\Http\UrlScript("http://localhost/test"),
+				$postData,
+				NULL,
+				NULL,
+				NULL,
+				'POST',
+				NULL,
+				NULL,
+				NULL
+			);
+			return $form;
 		}
 	}
