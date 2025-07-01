@@ -23,7 +23,7 @@
 	"require-dev": {
 		"inteve/types": "^2.0",
 		"nette/application": "^3.0",
-		"nette/tester": "^2.0"
+		"nette/tester": "^2.5"
 	},
 	"extra": {
 		"phpstan-extensions": [
