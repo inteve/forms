@@ -16,7 +16,7 @@
 		/**
 		 * @param array<mixed>|null $items
 		 */
-		public function __construct(?string $label = NULL, array $items = NULL)
+		public function __construct(?string $label = NULL, ?array $items = NULL)
 		{
 			parent::__construct($label, $items);
 			$this->control->appendAttribute('class', 'input--selectbox');
