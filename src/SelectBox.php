@@ -9,7 +9,7 @@
 
 	class SelectBox extends Nette\Forms\Controls\SelectBox
 	{
-		/** @var callable|NULL */
+		/** @var callable(string $value): array<mixed>|NULL */
 		private $itemsProvider;
 
 
@@ -24,6 +24,7 @@
 
 
 		/**
+		 * @param  callable(string $value): array<mixed> $itemsProvider
 		 * @return static
 		 */
 		public function setRemoteSource(string $url, callable $itemsProvider)
