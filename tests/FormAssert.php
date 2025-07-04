@@ -132,9 +132,9 @@
 			$form->httpRequest = new Nette\Http\Request(
 				new Nette\Http\UrlScript("http://localhost/test"),
 				$postData,
-				NULL,
-				NULL,
-				NULL,
+				[],
+				[],
+				[],
 				'POST',
 				NULL,
 				NULL,
